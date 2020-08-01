@@ -6,6 +6,6 @@ target 'EuroTorgTestTask' do
   use_frameworks!
 
   # Pods for EuroTorgTestTask
-  pod 'Moya'
+  pod 'Moya', '~> 13.0'
   pod 'SwiftyJSON'
 end

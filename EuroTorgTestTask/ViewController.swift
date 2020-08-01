@@ -10,9 +10,17 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    
+    let manager = NetworkManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        manager.getAllCountries { (models, error) in
+            guard let firstModel = models?.first, let id = firstModel.id else {return}
+            self.manager.getRegions(countryId: id) { (regions, error) in
+                print()
+            }
+        }
     }
 
 
