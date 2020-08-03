@@ -44,12 +44,24 @@ extension MainLayoutManager {
     func setPickerData(type: DataType) {
         currentPickerType = type
         dataForPicker = dataService.getArray(type: type)
+        if dataForPicker?.count == 0 {
+            return
+        }
         
         pickerView.reloadAllComponents()
         pickerView.reloadInputViews()
+        pickerView.selectRow(0, inComponent: 0, animated: false)        
     }
     
     func setModelToCell(type: DataType, model: BaseModel?) {
+        switch type {
+        case .country, .region, .districts, .cities, .street, .house:
+            setToMainCell(type: type, model: model)
+        default: break
+        }
+        
+    }
+    func setToMainCell(type: DataType, model: BaseModel?) {
         let cell: MainTableCell = cellData.first { (cell) -> Bool in
             let aa = cell as? MainTableCell
             return aa?.type == type
@@ -89,13 +101,23 @@ extension MainLayoutManager {
         cellData.append(mainCell(type: .districts, model: nil))
         cellData.append(mainCell(type: .cities, model: nil))
         cellData.append(mainCell(type: .street, model: nil))
-        
+        cellData.append(mainCell(type: .house, model: nil))
+        cellData.append(enterTextCell(type: .housings))
+        cellData.append(enterTextCell(type: .entry))
+        cellData.append(enterTextCell(type: .floor))
+        cellData.append(enterTextCell(type: .flats))
     }
     
-    func mainCell(type: DataType, model: BaseModel?) -> UITableViewCell{
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MainTableCell") as! MainTableCell
+    func mainCell(type: DataType, model: BaseModel?) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(ofType: MainTableCell.self)
         cell.set(type: type, model: model)
         cell.delegate = viewController
+        return cell
+    }
+    
+    func enterTextCell(type: DataType) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(ofType: EnterTextTableCell.self)
+        cell.set(type: type)
         return cell
     }
 }
@@ -119,7 +141,7 @@ extension MainLayoutManager: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let models = dataService.getArray(type: currentPickerType)
-        dataService.setSelectedData(type: currentPickerType, model: models[row])
+//        dataService.setSelectedData(type: currentPickerType, model: models[row])
         setModelToCell(type: currentPickerType, model: models[row])
     }
 }

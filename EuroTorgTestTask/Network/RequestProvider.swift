@@ -14,6 +14,7 @@ enum RequestsProvider {
     case getDistricts(regionId: Int)
     case getCities(districtId: Int)
     case getStreets(cityId: Int)
+    case getHouses(streetId: Int)
     
     func makePath() -> String {
         switch self {
@@ -22,6 +23,7 @@ enum RequestsProvider {
         case .getDistricts: return "/api/1.0/addresses/districts/"
         case .getCities: return "/api/1.0/addresses/cities/"
         case .getStreets: return "/api/1.0/addresses/streets/"
+        case .getHouses: return "/api/1.0/addresses/houses/"
         }
     }
     
@@ -40,6 +42,9 @@ enum RequestsProvider {
             return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
         case .getStreets(let id):
             let params: [String : Any] = ["city_id": id]
+            return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
+        case .getHouses(let id):
+            let params: [String : Any] = ["street_id": id]
             return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
         }
     }

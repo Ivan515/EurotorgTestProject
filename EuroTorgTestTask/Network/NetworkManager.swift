@@ -58,6 +58,12 @@ extension NetworkManager {
             self.handleArrayOfModels(result, completion: completion)
         }
     }
+    
+    func getHouses(houseId: Int, completion: @escaping(_ models: [BaseModel]?, _ error: NSError?) -> ()) {
+        provider.request(.getHouses(streetId: houseId)) { (result) in
+            self.handleArrayOfModels(result, completion: completion)
+        }
+    }
 
 }
 

@@ -15,7 +15,7 @@ class MainViewController: UIViewController {
     private let networkManager = NetworkManager()
     
     var dataService = MainDataService()
-
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var pickerBotContraint: NSLayoutConstraint!
@@ -29,6 +29,9 @@ class MainViewController: UIViewController {
     
     @IBAction func closePickerAction(_ sender: Any) {
         pickerBotContraint.constant = -UIScreen.main.bounds.height
+        let type = dataService.getPickerType()
+        layoutManager.setModelToCell(type: type, model: dataService.getSelectedData(type: type))
+        
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -48,7 +51,31 @@ extension MainViewController {
     func configure() {
         pickerBotContraint.constant = -UIScreen.main.bounds.height
         layoutManager = MainLayoutManager(vc: self, tableView: tableView, pickerView: pickerView, dataService: dataService)
+        tapToCloseKeyboard()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
+    func tapToCloseKeyboard() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc fileprivate func closeKeyboard() {
+        view.endEditing(true)
+    }
+    
+    @objc func keyboardWillShow(_ notification:Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height + 64, right: 0)
+        }
+    }
+    @objc func keyboardWillHide(_ notification:Notification) {
+        tableView.contentInset = UIEdgeInsets.zero
+    }
+}
+extension MainViewController {
     
     func selectCoutry(countries: [BaseModel]) {
         let model = countries.count == 1 ? countries.first : nil
@@ -61,23 +88,58 @@ extension MainViewController {
         layoutManager.setModelToCell(type: .districts, model: model)
         if model != nil {
             getNewData(type: .districts)
+        } else {
+            dataService.selectNewDataFor(type: .districts)
+            
+            layoutManager.setModelToCell(type: .districts, model: nil)
+            layoutManager.setModelToCell(type: .cities, model: nil)
+            layoutManager.setModelToCell(type: .street, model: nil)
+            layoutManager.setModelToCell(type: .house, model: nil)
+            layoutManager.setModelToCell(type: .housings, model: nil)
+            layoutManager.setModelToCell(type: .entry, model: nil)
+            layoutManager.setModelToCell(type: .floor, model: nil)
+            layoutManager.setModelToCell(type: .flats, model: nil)
+            
         }
     }
     
     func selectCities(cities: [BaseModel]) {
         let model = cities.count == 1 ? cities.first : nil
         layoutManager.setModelToCell(type: .cities, model: model)
+        if model != nil {
+            getNewData(type: .cities)
+        } else {
+            dataService.selectNewDataFor(type: .cities)
+            
+            layoutManager.setModelToCell(type: .cities, model: nil)
+            layoutManager.setModelToCell(type: .street, model: nil)
+            layoutManager.setModelToCell(type: .house, model: nil)
+            layoutManager.setModelToCell(type: .housings, model: nil)
+            layoutManager.setModelToCell(type: .entry, model: nil)
+            layoutManager.setModelToCell(type: .floor, model: nil)
+            layoutManager.setModelToCell(type: .flats, model: nil)
+        }
     }
     
     func selectStreets(models: [BaseModel]) {
         let model = models.count == 1 ? models.first : nil
         layoutManager.setModelToCell(type: .street, model: model)
+        if model == nil {
+            dataService.selectNewDataFor(type: .street)
+            
+            layoutManager.setModelToCell(type: .street, model: nil)
+            layoutManager.setModelToCell(type: .house, model: nil)
+            layoutManager.setModelToCell(type: .housings, model: nil)
+            layoutManager.setModelToCell(type: .entry, model: nil)
+            layoutManager.setModelToCell(type: .floor, model: nil)
+            layoutManager.setModelToCell(type: .flats, model: nil)
+        }
     }
+    
     
     func getNewData(type: DataType) {
         switch type {
         case .country:
-//            getAllCountries()
             let selected = dataService.getSelectedData(type: .country)
             getAllRegions(countryId: selected?.id ?? 0)
         case .region:
@@ -89,19 +151,32 @@ extension MainViewController {
         case .cities:
             let selectedCity = dataService.getSelectedData(type: .cities)
             getStreets(cityId: selectedCity?.id ?? 0)
-        case .street: break
+        case .street:
+            let selectedStreet = dataService.getSelectedData(type: .street)
+            getHouses(streetId: selectedStreet?.id ?? 0)
+        default: break
         }
     }
 }
 
 extension MainViewController: DidTapMainViewDelegate {
-    func openDatePicker(state: DataType) {
+    func openDatePicker(state: DataType, currentRow: Int) {
+        let pickerData = dataService.getArray(type: state)
+        if pickerData.count == 0 {
+            shakeEmpty(row: currentRow - 1)
+            return
+        }
         layoutManager.setPickerData(type: state)
         dataService.setPickerType(type: state)
         pickerBotContraint.constant = 0
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
+    }
+    
+    func shakeEmpty(row: Int) {
+        let cell = tableView.cellForRow(at: [0, row])
+        cell?.shake()
     }
 }
 
@@ -154,5 +229,16 @@ private extension MainViewController {
             }
         }
     }
-
+    
+    func getHouses(streetId: Int) {
+        networkManager.getHouses(houseId: streetId) { [weak self] (houses, error) in
+            guard let self = self else {return}
+            if let models = houses {
+                self.dataService.setData(type: .house, models: models)
+                
+            }
+        }
+    }
 }
+
+

@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol DidTapMainViewDelegate: class {
-    func openDatePicker(state: DataType)
+    func openDatePicker(state: DataType, currentRow: Int)
 }
 
 class MainTableCell: UITableViewCell {
@@ -21,6 +21,7 @@ class MainTableCell: UITableViewCell {
     
     var delegate: DidTapMainViewDelegate?
     var type: DataType!
+    var currentRow: Int!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,6 +30,7 @@ class MainTableCell: UITableViewCell {
     
     public func set(type: DataType, model: BaseModel?) {
         self.type = type
+        currentRow = type.makeIndex()
         titleLbl.text = type.makeTitle()
         valueLbl.text = model?.name ?? "Не выбранно"
     }
@@ -47,6 +49,6 @@ private extension MainTableCell {
     }
     
     @objc func tapAction() {
-        delegate?.openDatePicker(state: type)
+        delegate?.openDatePicker(state: type, currentRow: currentRow)
     }
 }
