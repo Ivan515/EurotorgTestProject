@@ -49,6 +49,10 @@ class MainViewController: UIViewController {
 
 extension MainViewController {
     func configure() {
+        let image = UIImage(named: "euroopt")
+        navigationItem.titleView = UIImageView(image: image)
+        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
+        
         pickerBotContraint.constant = -UIScreen.main.bounds.height
         layoutManager = MainLayoutManager(vc: self, tableView: tableView, pickerView: pickerView, dataService: dataService)
         tapToCloseKeyboard()
@@ -75,8 +79,8 @@ extension MainViewController {
         tableView.contentInset = UIEdgeInsets.zero
     }
 }
+
 extension MainViewController {
-    
     func selectCoutry(countries: [BaseModel]) {
         let model = countries.count == 1 ? countries.first : nil
         layoutManager.setModelToCell(type: .country, model: model)
@@ -235,7 +239,6 @@ private extension MainViewController {
             guard let self = self else {return}
             if let models = houses {
                 self.dataService.setData(type: .house, models: models)
-                
             }
         }
     }

@@ -40,3 +40,11 @@ class BaseModel: Decodable {
     }
 }
 
+extension BaseModel {
+    func makeName() -> String? {
+        if name == " " {
+            return "Без названия"
+        }
+        return name
+    }
+}
