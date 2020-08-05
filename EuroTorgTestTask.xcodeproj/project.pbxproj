@@ -25,6 +25,8 @@
 		AB6A52EC24D5F82B00BD6740 /* EnterTextTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A52EB24D5F82B00BD6740 /* EnterTextTableCell.swift */; };
 		AB6A52EF24D85ADC00BD6740 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A52EE24D85ADC00BD6740 /* Extensions.swift */; };
 		AB6A52F124D9760500BD6740 /* SaveBtnTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A52F024D9760500BD6740 /* SaveBtnTableCell.swift */; };
+		AB91DAEB24DAD35400A68D98 /* StreetSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB91DAEA24DAD35400A68D98 /* StreetSearchViewController.swift */; };
+		AB91DAED24DAD43200A68D98 /* StreetSearchLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB91DAEC24DAD43200A68D98 /* StreetSearchLayoutManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		AB6A52EB24D5F82B00BD6740 /* EnterTextTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterTextTableCell.swift; sourceTree = "<group>"; };
 		AB6A52EE24D85ADC00BD6740 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		AB6A52F024D9760500BD6740 /* SaveBtnTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveBtnTableCell.swift; sourceTree = "<group>"; };
+		AB91DAEA24DAD35400A68D98 /* StreetSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreetSearchViewController.swift; sourceTree = "<group>"; };
+		AB91DAEC24DAD43200A68D98 /* StreetSearchLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreetSearchLayoutManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +132,7 @@
 		AB6A52D124D2F1A500BD6740 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				AB91DAE724DAD32C00A68D98 /* StreetSearch */,
 				AB6A52D224D2F1AC00BD6740 /* MainVC */,
 			);
 			path = UI;
@@ -177,6 +182,31 @@
 				AB6A52EE24D85ADC00BD6740 /* Extensions.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		AB91DAE724DAD32C00A68D98 /* StreetSearch */ = {
+			isa = PBXGroup;
+			children = (
+				AB91DAE924DAD34000A68D98 /* Manager */,
+				AB91DAE824DAD33900A68D98 /* ViewController */,
+			);
+			path = StreetSearch;
+			sourceTree = "<group>";
+		};
+		AB91DAE824DAD33900A68D98 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AB91DAEA24DAD35400A68D98 /* StreetSearchViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		AB91DAE924DAD34000A68D98 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				AB91DAEC24DAD43200A68D98 /* StreetSearchLayoutManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		AFC06E9214C3ADF8ED7D8909 /* Pods */ = {
@@ -303,7 +333,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB91DAED24DAD43200A68D98 /* StreetSearchLayoutManager.swift in Sources */,
 				AB05570924D1D7CC008E7871 /* ViewController.swift in Sources */,
+				AB91DAEB24DAD35400A68D98 /* StreetSearchViewController.swift in Sources */,
 				AB05571D24D1DF92008E7871 /* RequestProvider.swift in Sources */,
 				AB05570524D1D7CC008E7871 /* AppDelegate.swift in Sources */,
 				AB6A52EC24D5F82B00BD6740 /* EnterTextTableCell.swift in Sources */,

@@ -202,10 +202,18 @@ extension MainViewController: DidTapMainViewDelegate {
             shakeEmpty(row: currentRow - 1)
             return
         }
+        view.endEditing(true)
         layoutManager.setPickerData(type: state)
         dataService.setPickerType(type: state)
+        if state == .street {
+            let vc = storyboard?.instantiateViewController(withIdentifier: "StreetSearchViewController") as! StreetSearchViewController
+            vc.data = pickerData
+            vc.delegate = self
+            navigationController?.pushViewController(vc, animated: true)
+            return
+        }
         pickerBotContraint.constant = 0
-        view.endEditing(true)
+        
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -224,6 +232,9 @@ extension MainViewController: DidTapMainViewDelegate {
     }
 }
 
+// MARK: -
+// MARK: - DELEGATES
+
 extension MainViewController: SaveDelegate {
     func saveAction() {
         view.endEditing(true)
@@ -240,6 +251,17 @@ extension MainViewController: SaveDelegate {
         }
     }
 }
+
+extension MainViewController: StreetSearchedDelegate {
+    func searchedStreetModel(model: BaseModel) {
+        selectStreets(models: [model])
+        dataService.setSelectedData(type: .street, model: model)
+        getNewData(type: .street)
+    }
+}
+
+// MARK: -
+// MARK: - NETWORK REQUESTS
 
 private extension MainViewController {
     func getAllCountries() {

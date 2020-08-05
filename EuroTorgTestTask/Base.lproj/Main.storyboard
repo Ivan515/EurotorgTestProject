@@ -201,6 +201,52 @@
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="122.54464285714285"/>
         </scene>
+        <!--Street Search View Controller-->
+        <scene sceneID="p4W-o6-Yt5">
+            <objects>
+                <viewController storyboardIdentifier="StreetSearchViewController" id="hKQ-rr-AqH" customClass="StreetSearchViewController" customModule="EuroTorgTestTask" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yaF-7M-gUq">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hK6-9F-Ot9">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" id="24L-tc-g1N">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="8Tn-NV-WZR">
+                                        <rect key="frame" x="0.0" y="72" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8Tn-NV-WZR" id="CFc-ln-NGq">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Lad-av-Oxm" firstAttribute="trailing" secondItem="hK6-9F-Ot9" secondAttribute="trailing" id="Lsr-Zn-z00"/>
+                            <constraint firstItem="hK6-9F-Ot9" firstAttribute="top" secondItem="Lad-av-Oxm" secondAttribute="top" id="UBp-7N-Yxg"/>
+                            <constraint firstItem="Lad-av-Oxm" firstAttribute="bottom" secondItem="hK6-9F-Ot9" secondAttribute="bottom" id="czJ-eV-KmW"/>
+                            <constraint firstItem="hK6-9F-Ot9" firstAttribute="leading" secondItem="Lad-av-Oxm" secondAttribute="leading" id="mdm-ss-Iyg"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Lad-av-Oxm"/>
+                    </view>
+                    <connections>
+                        <outlet property="searchBar" destination="24L-tc-g1N" id="sER-5l-aba"/>
+                        <outlet property="tableView" destination="hK6-9F-Ot9" id="iVp-oP-WeF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JIk-4Q-pMx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1002" y="124"/>
+        </scene>
     </scenes>
     <resources>
         <image name="chevron.down" catalog="system" width="128" height="72"/>
