@@ -79,11 +79,6 @@ extension MainLayoutManager {
     
 }
 
-
-extension MainLayoutManager : UITableViewDelegate {
-    
-}
-
 extension MainLayoutManager: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cellData.count
@@ -106,6 +101,7 @@ extension MainLayoutManager {
         cellData.append(enterTextCell(type: .entry))
         cellData.append(enterTextCell(type: .floor))
         cellData.append(enterTextCell(type: .flats))
+        cellData.append(saveBtnCell())
     }
     
     func mainCell(type: DataType, model: BaseModel?) -> UITableViewCell {
@@ -118,6 +114,12 @@ extension MainLayoutManager {
     func enterTextCell(type: DataType) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(ofType: EnterTextTableCell.self)
         cell.set(type: type)
+        return cell
+    }
+    
+    func saveBtnCell() -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(ofType: SaveBtnTableCell.self)
+        cell.delegate = viewController
         return cell
     }
 }
@@ -136,7 +138,7 @@ extension MainLayoutManager: UIPickerViewDataSource {
 
 extension MainLayoutManager: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return dataForPicker?[row].name
+        return dataForPicker?[row].makeName()
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

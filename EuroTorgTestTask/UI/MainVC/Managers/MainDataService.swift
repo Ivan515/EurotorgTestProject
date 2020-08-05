@@ -211,21 +211,14 @@ extension MainDataService {
             setSelectedData(type: .flats, model: nil)
         default: break
         }
-//        setData(type: .cities, models: [BaseModel]())
-//        setData(type: .street, models: [BaseModel]())
-//        setData(type: .house, models: [BaseModel]())
-//        setData(type: .housings, models: [BaseModel]())
-//        setData(type: .entry, models: [BaseModel]())
-//        setData(type: .floor, models: [BaseModel]())
-//        setData(type: .flats, models: [BaseModel]())
-//
-//        setSelectedData(type: .districts, model: nil)
-//        setSelectedData(type: .cities, model: nil)
-//        setSelectedData(type: .street, model: nil)
-//        setSelectedData(type: .house, model: nil)
-//        setSelectedData(type: .housings, model: nil)
-//        setSelectedData(type: .entry, model: nil)
-//        setSelectedData(type: .floor, model: nil)
-//        setSelectedData(type: .flats, model: nil)
+    }
+    
+    func checkAllRequiedFields() -> Bool {
+        if selectedCountry != nil, selectedRegion != nil,
+          selectedDistrict != nil, selectedCity != nil,
+            selectedStreet != nil, selectedHouse != nil {
+            return true
+        }
+        return false
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IHProgressHUD
 
 class MainViewController: UIViewController {
     
@@ -15,6 +16,8 @@ class MainViewController: UIViewController {
     private let networkManager = NetworkManager()
     
     var dataService = MainDataService()
+    
+    private var isHudShow = false
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var pickerView: UIPickerView!
@@ -25,6 +28,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         configure()
         getAllCountries()
+        IHProgressHUD.set(defaultStyle: .dark)
     }
     
     @IBAction func closePickerAction(_ sender: Any) {
@@ -59,6 +63,8 @@ extension MainViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hudShowing), name: NotificationName.IHProgressHUDWillAppear.getNotificationName(), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hudHide), name: NotificationName.IHProgressHUDDidDisappear.getNotificationName(), object: nil)
     }
     
     func tapToCloseKeyboard() {
@@ -78,6 +84,16 @@ extension MainViewController {
     @objc func keyboardWillHide(_ notification:Notification) {
         tableView.contentInset = UIEdgeInsets.zero
     }
+    
+    @objc func hudShowing() {
+        isHudShow = true
+        view.isUserInteractionEnabled = false
+    }
+    
+    @objc func hudHide() {
+        isHudShow = false
+        view.isUserInteractionEnabled = true
+    }
 }
 
 extension MainViewController {
@@ -93,6 +109,7 @@ extension MainViewController {
         if model != nil {
             getNewData(type: .districts)
         } else {
+            IHProgressHUD.dismiss()
             dataService.selectNewDataFor(type: .districts)
             
             layoutManager.setModelToCell(type: .districts, model: nil)
@@ -103,7 +120,6 @@ extension MainViewController {
             layoutManager.setModelToCell(type: .entry, model: nil)
             layoutManager.setModelToCell(type: .floor, model: nil)
             layoutManager.setModelToCell(type: .flats, model: nil)
-            
         }
     }
     
@@ -113,6 +129,7 @@ extension MainViewController {
         if model != nil {
             getNewData(type: .cities)
         } else {
+            IHProgressHUD.dismiss()
             dataService.selectNewDataFor(type: .cities)
             
             layoutManager.setModelToCell(type: .cities, model: nil)
@@ -129,6 +146,7 @@ extension MainViewController {
         let model = models.count == 1 ? models.first : nil
         layoutManager.setModelToCell(type: .street, model: model)
         if model == nil {
+            IHProgressHUD.dismiss()
             dataService.selectNewDataFor(type: .street)
             
             layoutManager.setModelToCell(type: .street, model: nil)
@@ -173,6 +191,7 @@ extension MainViewController: DidTapMainViewDelegate {
         layoutManager.setPickerData(type: state)
         dataService.setPickerType(type: state)
         pickerBotContraint.constant = 0
+        view.endEditing(true)
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -184,61 +203,105 @@ extension MainViewController: DidTapMainViewDelegate {
     }
 }
 
+extension MainViewController: SaveDelegate {
+    func saveAction() {
+        view.endEditing(true)
+        if dataService.checkAllRequiedFields() {
+            IHProgressHUD.showSuccesswithStatus("Сохранено")
+            IHProgressHUD.dismissWithDelay(0.01)
+            return
+        }
+        IHProgressHUD.showError(withStatus: "Заполните все обязательные поля")
+        IHProgressHUD.dismissWithDelay(0.01)
+    }
+}
+
 private extension MainViewController {
     func getAllCountries() {
-        networkManager.getAllCountries { [weak self] (countries, err) in
+        IHProgressHUD.show(withStatus: "Запрашиваю список стран")
+        networkManager.getAllCountries { [weak self] (countries, error) in
             guard let self = self else {return}
+            IHProgressHUD.dismiss()
             if let models = countries {
                 self.dataService.setData(type: .country, models: models)
                 self.selectCoutry(countries: models)
+            }
+            if let error = error {
+                print(error)
             }
         }
     }
     
     func getAllRegions(countryId: Int) {
+        IHProgressHUD.show(withStatus: "Запрашиваю список регионов")
         networkManager.getRegions(countryId: countryId) { [weak self] (regions, error) in
             guard let self = self else {return}
+            IHProgressHUD.dismiss()
             if let models = regions {
                 self.dataService.setData(type: .region, models: models)
+            }
+            if let error = error {
+                print(error)
             }
         }
     }
     
     func getDistrictsFor(regionId: Int) {
+        IHProgressHUD.show(withStatus: "Запрашиваю список областей")
         networkManager.getDistricts(regionId: regionId) { [weak self] (districts, error) in
             guard let self = self else {return}
             if let models = districts {
                 self.dataService.setData(type: .districts, models: models)
                 self.selectDistrict(districts: models)
             }
+            if let error = error {
+                print(error)
+                IHProgressHUD.dismiss()
+            }
         }
     }
     
     func getCities(districtId: Int) {
+        IHProgressHUD.show(withStatus: "Запрашиваю список городов")
         networkManager.getCities(districtId: districtId) { [weak self] (cities, error) in
             guard let self = self else {return}
             if let models = cities {
                 self.dataService.setData(type: .cities, models: models)
                 self.selectCities(cities: models)
             }
+            if let error = error {
+                print(error)
+                IHProgressHUD.dismiss()
+            }
         }
     }
     
     func getStreets(cityId: Int) {
+        IHProgressHUD.show(withStatus: "Запрашиваю список улиц")
         networkManager.getStreets(cityId: cityId) { [weak self] (streets, error) in
             guard let self = self else {return}
             if let models = streets {
                 self.dataService.setData(type: .street, models: models)
                 self.selectStreets(models: models)
             }
+            if let error = error {
+                print(error)
+                IHProgressHUD.dismiss()
+            }
         }
     }
     
     func getHouses(streetId: Int) {
+        IHProgressHUD.show(withStatus: "Запрашиваю список домов")
         networkManager.getHouses(houseId: streetId) { [weak self] (houses, error) in
             guard let self = self else {return}
             if let models = houses {
                 self.dataService.setData(type: .house, models: models)
+                IHProgressHUD.dismiss()
+            }
+            if let error = error {
+                print(error)
+                IHProgressHUD.dismiss()
             }
         }
     }

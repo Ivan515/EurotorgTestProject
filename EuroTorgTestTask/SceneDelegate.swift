@@ -67,10 +67,5 @@ extension SceneDelegate {
         UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().barTintColor = UIColor.white
-        
-        
-//        guard let robotoFont14 = R.font.robotoBold(size: 14) else {return}
-//               UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font : robotoFont14,
-//                                                                   NSAttributedString.Key.foregroundColor : UIColor.white]
     }
 }

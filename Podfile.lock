@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.9.1)
+  - IHProgressHUD (0.1.4)
   - Moya (13.0.1):
     - Moya/Core (= 13.0.1)
   - Moya/Core (13.0.1):
@@ -9,22 +10,25 @@ PODS:
   - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
+  - IHProgressHUD
   - Moya (~> 13.0)
   - SwiftyJSON
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - IHProgressHUD
     - Moya
     - Result
     - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  IHProgressHUD: a01846bfbb581c761c79747c67b08387c3bdfae3
   Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
   Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 4dc4f3b08c4aaf0c33bf2eae355a1b8a6069b360
+PODFILE CHECKSUM: 43c47b1c34960389d4b583e2f63830da96b7c63a
 
 COCOAPODS: 1.9.1

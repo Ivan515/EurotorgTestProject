@@ -8,4 +8,5 @@ target 'EuroTorgTestTask' do
   # Pods for EuroTorgTestTask
   pod 'Moya', '~> 13.0'
   pod 'SwiftyJSON'
+  pod 'IHProgressHUD'
 end

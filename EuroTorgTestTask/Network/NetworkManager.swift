@@ -85,18 +85,17 @@ private extension NetworkManager {
                 completion(model, nil)
             case 401:
                 print("Autorization Failed")
-                completion(nil, nil)
+                completion(nil, NSError(domain: "Autorization Failed", code: 401, userInfo: nil))
             case 500:
                 print("error 500")
-                completion(nil, nil)
+                completion(nil, NSError(domain: "Server error", code: 500, userInfo: nil))
             default:
                 print("some error")
-                completion(nil, nil)
+                completion(nil, NSError(domain: "Unknoown error", code: 400, userInfo: nil))
             }
         case let .failure(error):
             print(error)
-            completion(nil, nil)
-//            completion(nil, er)
+            completion(nil, NSError(domain: error.errorDescription ?? "ERROR", code: error.errorCode, userInfo: error.errorUserInfo))
         }
     }
     
@@ -116,17 +115,17 @@ private extension NetworkManager {
                 completion(model, nil)
             case 401:
                 print("Autorization Failed")
-                completion(nil, nil)
+                completion(nil, NSError(domain: "Autorization Failed", code: 401, userInfo: nil))
             case 500:
                 print("error 500")
-                completion(nil, nil)
+                completion(nil, NSError(domain: "Server error", code: 500, userInfo: nil))
             default:
                 print("some error")
-                completion(nil, nil)
+                completion(nil, NSError(domain: "Unknoown error", code: 400, userInfo: nil))
             }
         case let .failure(error):
             print("Request error", error)
-            completion(nil, nil)
+            completion(nil, NSError(domain: error.errorDescription ?? "ERROR", code: error.errorCode, userInfo: error.errorUserInfo))
         }
     }
 }

@@ -120,6 +120,39 @@
                                             <outlet property="titleLbl" destination="3Kr-HJ-rGO" id="JEx-mo-OYq"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SaveBtnTableCell" rowHeight="76" id="1ym-LO-FCH" customClass="SaveBtnTableCell" customModule="EuroTorgTestTask" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="203" width="414" height="76"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1ym-LO-FCH" id="xwi-Qe-mqX">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="76"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wdX-hO-sNN">
+                                                    <rect key="frame" x="20" y="10" width="374" height="56"/>
+                                                    <color key="backgroundColor" red="0.92286759610000002" green="0.37157395479999999" blue="0.16460990910000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="56" id="arW-h2-Yom"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                    <state key="normal" title="Сохранить">
+                                                        <color key="titleColor" red="0.93180817370000002" green="0.93194204570000005" blue="0.93177884820000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="saveAction:" destination="1ym-LO-FCH" eventType="touchUpInside" id="KgS-bT-W5i"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="wdX-hO-sNN" secondAttribute="trailing" constant="20" id="VNt-BY-CMW"/>
+                                                <constraint firstItem="wdX-hO-sNN" firstAttribute="top" secondItem="xwi-Qe-mqX" secondAttribute="top" constant="10" id="Wi3-lP-Myh"/>
+                                                <constraint firstAttribute="bottom" secondItem="wdX-hO-sNN" secondAttribute="bottom" constant="10" id="gTi-TN-5zX"/>
+                                                <constraint firstItem="wdX-hO-sNN" firstAttribute="leading" secondItem="xwi-Qe-mqX" secondAttribute="leading" constant="20" id="xwh-Ab-xQH"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="saveBtn" destination="wdX-hO-sNN" id="br0-eE-NMR"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="He9-Mr-Wro">

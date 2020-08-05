@@ -24,6 +24,7 @@
 		AB6A52DD24D323D700BD6740 /* MainDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A52DC24D323D700BD6740 /* MainDataService.swift */; };
 		AB6A52EC24D5F82B00BD6740 /* EnterTextTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A52EB24D5F82B00BD6740 /* EnterTextTableCell.swift */; };
 		AB6A52EF24D85ADC00BD6740 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A52EE24D85ADC00BD6740 /* Extensions.swift */; };
+		AB6A52F124D9760500BD6740 /* SaveBtnTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A52F024D9760500BD6740 /* SaveBtnTableCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		AB6A52DC24D323D700BD6740 /* MainDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDataService.swift; sourceTree = "<group>"; };
 		AB6A52EB24D5F82B00BD6740 /* EnterTextTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterTextTableCell.swift; sourceTree = "<group>"; };
 		AB6A52EE24D85ADC00BD6740 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		AB6A52F024D9760500BD6740 /* SaveBtnTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveBtnTableCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 			children = (
 				AB6A52DA24D2F28300BD6740 /* MainTableCell.swift */,
 				AB6A52EB24D5F82B00BD6740 /* EnterTextTableCell.swift */,
+				AB6A52F024D9760500BD6740 /* SaveBtnTableCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 				AB05571B24D1DCBC008E7871 /* BaseModel.swift in Sources */,
 				AB6A52DD24D323D700BD6740 /* MainDataService.swift in Sources */,
 				AB6A52DB24D2F28300BD6740 /* MainTableCell.swift in Sources */,
+				AB6A52F124D9760500BD6740 /* SaveBtnTableCell.swift in Sources */,
 				AB6A52EF24D85ADC00BD6740 /* Extensions.swift in Sources */,
 				AB05570724D1D7CC008E7871 /* SceneDelegate.swift in Sources */,
 				AB05571F24D1E181008E7871 /* Constants.swift in Sources */,
@@ -460,6 +464,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GG9HQ29SNT;
 				INFOPLIST_FILE = EuroTorgTestTask/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -479,6 +484,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GG9HQ29SNT;
 				INFOPLIST_FILE = EuroTorgTestTask/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
