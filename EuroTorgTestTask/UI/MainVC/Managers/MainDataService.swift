@@ -70,7 +70,7 @@ class MainDataService: NSObject {
     var allStreets = [BaseModel]()
     var allHouses = [BaseModel]()
     
-    private var selectedPickerType: DataType!
+    private var selectedPickerType: DataType?
 }
 
 // MARK: -
@@ -152,7 +152,7 @@ extension MainDataService {
         }
     }
     
-    func getPickerType() -> DataType {
+    func getPickerType() -> DataType? {
         return selectedPickerType
     }
 }

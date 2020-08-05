@@ -32,10 +32,9 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func closePickerAction(_ sender: Any) {
-        pickerBotContraint.constant = -UIScreen.main.bounds.height
-        let type = dataService.getPickerType()
+        guard let type = dataService.getPickerType() else {return}
         layoutManager.setModelToCell(type: type, model: dataService.getSelectedData(type: type))
-        
+        pickerBotContraint.constant = -UIScreen.main.bounds.height
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -47,7 +46,8 @@ class MainViewController: UIViewController {
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
-        getNewData(type: dataService.getPickerType())
+        guard let type = dataService.getPickerType() else {return}
+        getNewData(type: type)
     }
 }
 
@@ -74,11 +74,13 @@ extension MainViewController {
     
     @objc fileprivate func closeKeyboard() {
         view.endEditing(true)
+        closePicker()
     }
     
     @objc func keyboardWillShow(_ notification:Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height + 64, right: 0)
+            closePicker()
         }
     }
     @objc func keyboardWillHide(_ notification:Notification) {
@@ -183,6 +185,18 @@ extension MainViewController {
 
 extension MainViewController: DidTapMainViewDelegate {
     func openDatePicker(state: DataType, currentRow: Int) {
+        if state == dataService.getPickerType(), pickerBotContraint.constant == 0  {return}
+        if pickerBotContraint.constant == 0 {
+            closePicker()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.openClosedPicker(state: state, currentRow: currentRow)
+            }
+            return
+        }
+        openClosedPicker(state: state, currentRow: currentRow)
+    }
+    
+    func openClosedPicker(state: DataType, currentRow: Int) {
         let pickerData = dataService.getArray(type: state)
         if pickerData.count == 0 {
             shakeEmpty(row: currentRow - 1)
@@ -192,6 +206,13 @@ extension MainViewController: DidTapMainViewDelegate {
         dataService.setPickerType(type: state)
         pickerBotContraint.constant = 0
         view.endEditing(true)
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func closePicker() {
+        pickerBotContraint.constant = -UIScreen.main.bounds.height
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -208,11 +229,15 @@ extension MainViewController: SaveDelegate {
         view.endEditing(true)
         if dataService.checkAllRequiedFields() {
             IHProgressHUD.showSuccesswithStatus("Сохранено")
-            IHProgressHUD.dismissWithDelay(0.01)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                IHProgressHUD.dismiss()
+            }
             return
         }
         IHProgressHUD.showError(withStatus: "Заполните все обязательные поля")
-        IHProgressHUD.dismissWithDelay(0.01)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            IHProgressHUD.dismiss()
+        }
     }
 }
 
