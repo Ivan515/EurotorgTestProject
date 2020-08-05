@@ -27,6 +27,7 @@
 		AB6A52F124D9760500BD6740 /* SaveBtnTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6A52F024D9760500BD6740 /* SaveBtnTableCell.swift */; };
 		AB91DAEB24DAD35400A68D98 /* StreetSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB91DAEA24DAD35400A68D98 /* StreetSearchViewController.swift */; };
 		AB91DAED24DAD43200A68D98 /* StreetSearchLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB91DAEC24DAD43200A68D98 /* StreetSearchLayoutManager.swift */; };
+		AB91DAEF24DADBFE00A68D98 /* MainVCNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB91DAEE24DADBFE00A68D98 /* MainVCNetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		AB6A52F024D9760500BD6740 /* SaveBtnTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveBtnTableCell.swift; sourceTree = "<group>"; };
 		AB91DAEA24DAD35400A68D98 /* StreetSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreetSearchViewController.swift; sourceTree = "<group>"; };
 		AB91DAEC24DAD43200A68D98 /* StreetSearchLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreetSearchLayoutManager.swift; sourceTree = "<group>"; };
+		AB91DAEE24DADBFE00A68D98 /* MainVCNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVCNetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 			children = (
 				AB6A52D724D2F1DE00BD6740 /* MainLayoutManager.swift */,
 				AB6A52DC24D323D700BD6740 /* MainDataService.swift */,
+				AB91DAEE24DADBFE00A68D98 /* MainVCNetworkManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				AB91DAED24DAD43200A68D98 /* StreetSearchLayoutManager.swift in Sources */,
 				AB05570924D1D7CC008E7871 /* ViewController.swift in Sources */,
 				AB91DAEB24DAD35400A68D98 /* StreetSearchViewController.swift in Sources */,
+				AB91DAEF24DADBFE00A68D98 /* MainVCNetworkManager.swift in Sources */,
 				AB05571D24D1DF92008E7871 /* RequestProvider.swift in Sources */,
 				AB05570524D1D7CC008E7871 /* AppDelegate.swift in Sources */,
 				AB6A52EC24D5F82B00BD6740 /* EnterTextTableCell.swift in Sources */,

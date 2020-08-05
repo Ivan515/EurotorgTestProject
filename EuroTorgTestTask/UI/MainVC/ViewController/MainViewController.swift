@@ -13,7 +13,7 @@ class MainViewController: UIViewController {
     
     private var layoutManager: MainLayoutManager!
     
-    private let networkManager = NetworkManager()
+    private var networkManager: MainVCNetworkManager!//NetworkManager()
     
     var dataService = MainDataService()
     
@@ -59,6 +59,7 @@ extension MainViewController {
         
         pickerBotContraint.constant = -UIScreen.main.bounds.height
         layoutManager = MainLayoutManager(vc: self, tableView: tableView, pickerView: pickerView, dataService: dataService)
+        networkManager = MainVCNetworkManager(vc: self)
         tapToCloseKeyboard()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -206,10 +207,7 @@ extension MainViewController: DidTapMainViewDelegate {
         layoutManager.setPickerData(type: state)
         dataService.setPickerType(type: state)
         if state == .street {
-            let vc = storyboard?.instantiateViewController(withIdentifier: "StreetSearchViewController") as! StreetSearchViewController
-            vc.data = pickerData
-            vc.delegate = self
-            navigationController?.pushViewController(vc, animated: true)
+            openStreetSearch(data: pickerData)
             return
         }
         pickerBotContraint.constant = 0
@@ -218,6 +216,13 @@ extension MainViewController: DidTapMainViewDelegate {
             self.view.layoutIfNeeded()
         }
     }
+    
+    func openStreetSearch(data: [BaseModel]) {
+           let vc = storyboard?.instantiateViewController(withIdentifier: "StreetSearchViewController") as! StreetSearchViewController
+           vc.data = data
+           vc.delegate = self
+           navigationController?.pushViewController(vc, animated: true)
+       }
     
     func closePicker() {
         pickerBotContraint.constant = -UIScreen.main.bounds.height
@@ -265,92 +270,27 @@ extension MainViewController: StreetSearchedDelegate {
 
 private extension MainViewController {
     func getAllCountries() {
-        IHProgressHUD.show(withStatus: "Запрашиваю список стран")
-        networkManager.getAllCountries { [weak self] (countries, error) in
-            guard let self = self else {return}
-            IHProgressHUD.dismiss()
-            if let models = countries {
-                self.dataService.setData(type: .country, models: models)
-                self.selectCoutry(countries: models)
-            }
-            if let error = error {
-                print(error)
-            }
-        }
+        networkManager.getAllCountries()
     }
     
     func getAllRegions(countryId: Int) {
-        IHProgressHUD.show(withStatus: "Запрашиваю список регионов")
-        networkManager.getRegions(countryId: countryId) { [weak self] (regions, error) in
-            guard let self = self else {return}
-            IHProgressHUD.dismiss()
-            if let models = regions {
-                self.dataService.setData(type: .region, models: models)
-            }
-            if let error = error {
-                print(error)
-            }
-        }
+        networkManager.getAllRegions(countryId: countryId)
     }
     
     func getDistrictsFor(regionId: Int) {
-        IHProgressHUD.show(withStatus: "Запрашиваю список областей")
-        networkManager.getDistricts(regionId: regionId) { [weak self] (districts, error) in
-            guard let self = self else {return}
-            if let models = districts {
-                self.dataService.setData(type: .districts, models: models)
-                self.selectDistrict(districts: models)
-            }
-            if let error = error {
-                print(error)
-                IHProgressHUD.dismiss()
-            }
-        }
+        networkManager.getDistrictsFor(regionId: regionId)
     }
     
     func getCities(districtId: Int) {
-        IHProgressHUD.show(withStatus: "Запрашиваю список городов")
-        networkManager.getCities(districtId: districtId) { [weak self] (cities, error) in
-            guard let self = self else {return}
-            if let models = cities {
-                self.dataService.setData(type: .cities, models: models)
-                self.selectCities(cities: models)
-            }
-            if let error = error {
-                print(error)
-                IHProgressHUD.dismiss()
-            }
-        }
+        networkManager.getCities(districtId: districtId)
     }
     
     func getStreets(cityId: Int) {
-        IHProgressHUD.show(withStatus: "Запрашиваю список улиц")
-        networkManager.getStreets(cityId: cityId) { [weak self] (streets, error) in
-            guard let self = self else {return}
-            if let models = streets {
-                self.dataService.setData(type: .street, models: models)
-                self.selectStreets(models: models)
-            }
-            if let error = error {
-                print(error)
-                IHProgressHUD.dismiss()
-            }
-        }
+        networkManager.getStreets(cityId: cityId)
     }
     
     func getHouses(streetId: Int) {
-        IHProgressHUD.show(withStatus: "Запрашиваю список домов")
-        networkManager.getHouses(houseId: streetId) { [weak self] (houses, error) in
-            guard let self = self else {return}
-            if let models = houses {
-                self.dataService.setData(type: .house, models: models)
-                IHProgressHUD.dismiss()
-            }
-            if let error = error {
-                print(error)
-                IHProgressHUD.dismiss()
-            }
-        }
+        networkManager.getHouses(streetId: streetId)
     }
 }
 
